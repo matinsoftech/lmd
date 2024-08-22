@@ -57,95 +57,105 @@ class _RootScreenState extends State<RootScreen> {
   int currentTab = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: widget.user == "Driver"
-          ? Stack(
-              children: [
-                // currentTab == 0 ? CustomerHomePage() : Container(),
-                currentTab == 0
-                    ? OrderPageForDriver(
-                        state: "",
-                      )
-                    : Container(),
-                currentTab == 1
-                    ? DeliverPageForDriver(
-                        state: "",
-                      )
-                    : Container(),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: widget.user == "Driver"
+            ? Stack(
+                children: [
+                  // currentTab == 0 ? CustomerHomePage() : Container(),
+                  currentTab == 0
+                      ? OrderPageForDriver(
+                          state: "",
+                        )
+                      : Container(),
+                  currentTab == 1
+                      ? DeliverPageForDriver(
+                          state: "",
+                        )
+                      : Container(),
 
-                currentTab == 2 ? ProfilePageForDriver('Driver') : Container(),
-              ],
-            )
-          : Stack(
-              children: [
-                currentTab == 0 ? CustomerHomePage() : Container(),
-                currentTab == 1
-                    ? OrderPage(
-                        state: "",
-                      )
-                    : Container(),
-                currentTab == 2 ? const CreateOrderStepper() : Container(),
-                currentTab == 3 ? ProfilePage('') : Container(),
-              ],
-            ),
-      bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-              color: Color.fromRGBO(248, 248, 248, 1),
-              boxShadow: [
-                BoxShadow(
-                  spreadRadius: 0,
-                  blurRadius: 3,
-                  offset: Offset(1, 1),
-                  color: Color.fromRGBO(87, 87, 87, 0.25),
-                ),
-                BoxShadow(
-                  spreadRadius: 0,
-                  blurRadius: 3,
-                  offset: Offset(1, 1),
-                  color: Color.fromRGBO(87, 87, 87, 0.25),
-                )
-              ]),
-          child: BottomNavigationBar(
-              currentIndex: currentTab,
-              unselectedItemColor: Colors.grey[500],
-              selectedItemColor: Palette.primarycolor,
-              selectedFontSize: 12,
-              unselectedFontSize: 12,
-              unselectedLabelStyle: const TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.w500),
-              selectedLabelStyle: const TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.w500),
-              iconSize: 22,
-              items: widget.user == "Driver"
-                  ? const [
-                      // BottomNavigationBarItem(
-                      //     icon: Icon(Icons.home_filled), label: "Home"),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.shopping_bag_outlined),
-                          label: "Pick up"),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.delivery_dining), label: "Deliver"),
-                      BottomNavigationBarItem(
-                          icon: Icon(CupertinoIcons.person), label: "Profile")
-                    ]
-                  : const [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home_filled), label: "Home"),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.shopping_bag_outlined),
-                          label: "Orders"),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.add_circle_outline),
-                          label: "New Order"),
-                      BottomNavigationBarItem(
-                          icon: Icon(CupertinoIcons.person), label: "Profile")
-                    ],
-              type: BottomNavigationBarType.fixed,
-              onTap: (value) {
-                setState(() {
-                  currentTab = value;
-                });
-              })),
+                  currentTab == 2
+                      ? ProfilePageForDriver('Driver')
+                      : Container(),
+                ],
+              )
+            : Stack(
+                children: [
+                  currentTab == 0 ? CustomerHomePage() : Container(),
+                  currentTab == 1
+                      ? OrderPage(
+                          state: "",
+                        )
+                      : Container(),
+                  currentTab == 2 ? const CreateOrderStepper() : Container(),
+                  currentTab == 3 ? ProfilePage('') : Container(),
+                ],
+              ),
+        bottomNavigationBar: Container(
+            decoration: const BoxDecoration(
+                color: Color.fromRGBO(248, 248, 248, 1),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 0,
+                    blurRadius: 3,
+                    offset: Offset(1, 1),
+                    color: Color.fromRGBO(87, 87, 87, 0.25),
+                  ),
+                  BoxShadow(
+                    spreadRadius: 0,
+                    blurRadius: 3,
+                    offset: Offset(1, 1),
+                    color: Color.fromRGBO(87, 87, 87, 0.25),
+                  )
+                ]),
+            child: BottomNavigationBar(
+                currentIndex: currentTab,
+                unselectedItemColor: Colors.grey[500],
+                selectedItemColor: Palette.primarycolor,
+                selectedFontSize: 12,
+                unselectedFontSize: 12,
+                unselectedLabelStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w500),
+                selectedLabelStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w500),
+                iconSize: 22,
+                items: widget.user == "Driver"
+                    ? const [
+                        // BottomNavigationBarItem(
+                        //     icon: Icon(Icons.home_filled), label: "Home"),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.shopping_bag_outlined),
+                            label: "Pick up"),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.delivery_dining),
+                            label: "Deliver"),
+                        BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.person), label: "Profile")
+                      ]
+                    : const [
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.home_filled), label: "Home"),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.shopping_bag_outlined),
+                            label: "Orders"),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.add_circle_outline),
+                            label: "New Order"),
+                        BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.person), label: "Profile")
+                      ],
+                type: BottomNavigationBarType.fixed,
+                onTap: (value) {
+                  setState(() {
+                    currentTab = value;
+                  });
+                })),
+      ),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    return false;
   }
 }

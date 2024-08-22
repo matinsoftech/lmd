@@ -5,18 +5,11 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:courier_app/ApiServices/apiService.dart';
-import 'package:courier_app/ApiServices/api_constants.dart';
 import 'package:courier_app/main.dart';
-import 'package:courier_app/pages/listed_order_page.dart';
-import 'package:courier_app/pages/listed_order_page_for_driver.dart';
 import 'package:courier_app/pages/login.dart';
-import 'package:courier_app/provider/orderProvider.dart';
 import 'package:courier_app/utils/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 import '../ApiServices/api_modals/driver_profile.dart';
 
@@ -29,21 +22,19 @@ class ProfilePageForDriver extends StatefulWidget {
 }
 
 class _ProfilePageForDriverState extends State<ProfilePageForDriver> {
-
-DriverData? profile;
+  DriverData? profile;
   @override
   void initState() {
     super.initState();
     fetchUserProfile();
   }
 
-   fetchUserProfile()async{
+  fetchUserProfile() async {
     final fetchedprofile = await ApiServices.getDriverProfileData();
     setState(() {
       profile = fetchedprofile;
     });
-    print(profile?.hasdriver?.email?? '');
-    
+    print(profile?.hasdriver?.email ?? '');
   }
 
   @override
@@ -70,190 +61,210 @@ DriverData? profile;
             },
           ),
         ),
-        body: profile==null?Center(child:CircularProgressIndicator()):Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Card(
-                elevation: 9,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom:14.0,left:20),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height:10),
-                        Text("Profile Information",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18,color:Palette.primarycolor)),
-                        const SizedBox(height: 10),
-                        //Image
-                        Stack(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Image.asset("assets/profile.jpg",
-                                    height: 120, width: 120)),
-                          ],
-                        ),
-                          SizedBox(height:10),
-                          
-                        Container(
-                          padding:EdgeInsets.only(left:80),
+        body: profile == null
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 14.0, left: 20),
+                        child: Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Name: ",style:TextStyle(fontWeight: FontWeight.bold)),
-                                Text(profile?.hasdriver?.name?? ''),
-                              ],
+                              SizedBox(height: 10),
+                              Text("Profile Information",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Palette.primarycolor)),
+                              const SizedBox(height: 10),
+                              //Image
+                              Stack(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      child: Image.asset("assets/profile.jpg",
+                                          height: 120, width: 120)),
+                                ],
                               ),
-                  
-                                                    Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Email: ",style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text(profile?.hasdriver?.email?? ''),
-                        ],
-                        ), 
-                      Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Address: ",style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text(profile?.hasdriver?.address?? ''),
-                        ],
-                        ),  
-                                   
-                       Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Phone: ",style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text(profile?.hasdriver?.phone?? ''),
-                        ],
-                        ),  
-                  
+                              SizedBox(height: 10),
+
+                              Container(
+                                padding: EdgeInsets.only(left: 80),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      // mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Name: ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(profile?.hasdriver?.name ?? ''),
+                                      ],
+                                    ),
+                                    Row(
+                                      // mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Email: ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(profile?.hasdriver?.email ?? ''),
+                                      ],
+                                    ),
+                                    Row(
+                                      // mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Address: ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(profile?.hasdriver?.address ?? ''),
+                                      ],
+                                    ),
+                                    Row(
+                                      // mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Phone: ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(profile?.hasdriver?.phone ?? ''),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Divider(),
+                              // Text(profile?.hasbranch?.name?? ''),
+                              // Text(profile?.hasbranch?.branchAddress?? 'null')
                             ],
                           ),
-                        ), 
-                                  
-                                  
-                                  
-                        // Divider(),
-                        // Text(profile?.hasbranch?.name?? ''),
-                        // Text(profile?.hasbranch?.branchAddress?? 'null')
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height:20),
-
-              Card(
-                elevation: 12,
-                child:Padding(
-                  padding: const EdgeInsets.fromLTRB(20,8,8,12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Text("Branch Information",style:TextStyle(fontSize: 18,color:Palette.primarycolor,fontWeight: FontWeight.bold)),
-                    SizedBox(height:6),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Branch Name: ",style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text(profile?.hasbranch?.name?? ''),
-                        ],
-                        ),  
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Branch Address: ",style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text(profile?.hasbranch?.branchAddress?? 'null'),
-                        ],
-                        ),  
-                
-                  ],),
-                )
-
-              ),
-          
-              SizedBox(height: 20),
-              //Edit Profile
-              // ProfileWidgetMenu(
-              //   button: () {},
-              //   title: "Edit Profile",
-              //   leadingIcon: CupertinoIcons.pencil_ellipsis_rectangle,
-              // ),
-          
-              //My address
-              // ProfileWidgetMenu(
-              //   button: () {},
-              //   title: "My Address",
-              //   leadingIcon: CupertinoIcons.placemark,
-              // ),
-          
-              //My order
-              // ProfileWidgetMenu(
-              //   button: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => OrderPageForDriver(
-              //                   state: "profile",
-              //                 )));
-              //   },
-              //   title: "My Order",
-              //   leadingIcon: CupertinoIcons.cube_box,
-              // ),
-              //Change Passowrd
-              // ProfileWidgetMenu(
-              //   button: () {},
-              //   title: "Change Password",
-              //   leadingIcon: Icons.key_outlined,
-              // ),
-          
-              // Logout
-              SizedBox(height: mq.height * 0.03),
-              Card(
-                elevation:6,
-                child: GestureDetector(
-                    onTap: () async {
-                      SharedPreferences sp = await SharedPreferences.getInstance();
-                      await sp.remove('token');
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Login()));
-                    },
-                    child: Container(
-                        margin: EdgeInsets.all(14),
-                        height: mq.height * 0.07,
-                        width: mq.width,
-                        decoration: BoxDecoration(
-                          color: Palette.primarycolor,
-                          borderRadius: BorderRadius.circular(9),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.logout_rounded, color: Colors.white),
-                            SizedBox(width: 4),
-                            Text("Logout",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17,
-                                )),
-                          ],
-                        ))),
-              )
-            ],
-          ),
-        ));
+                      ),
+                    ),
+                    SizedBox(height: 20),
+
+                    Card(
+                        elevation: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 8, 8, 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Branch Information",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Palette.primarycolor,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(height: 6),
+                              Row(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Branch Name: ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  Text(profile?.hasbranch?.name ?? ''),
+                                ],
+                              ),
+                              Row(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Branch Address: ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  Text(profile?.hasbranch?.branchAddress ??
+                                      'null'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )),
+
+                    SizedBox(height: 20),
+                    //Edit Profile
+                    // ProfileWidgetMenu(
+                    //   button: () {},
+                    //   title: "Edit Profile",
+                    //   leadingIcon: CupertinoIcons.pencil_ellipsis_rectangle,
+                    // ),
+
+                    //My address
+                    // ProfileWidgetMenu(
+                    //   button: () {},
+                    //   title: "My Address",
+                    //   leadingIcon: CupertinoIcons.placemark,
+                    // ),
+
+                    //My order
+                    // ProfileWidgetMenu(
+                    //   button: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => OrderPageForDriver(
+                    //                   state: "profile",
+                    //                 )));
+                    //   },
+                    //   title: "My Order",
+                    //   leadingIcon: CupertinoIcons.cube_box,
+                    // ),
+                    //Change Passowrd
+                    // ProfileWidgetMenu(
+                    //   button: () {},
+                    //   title: "Change Password",
+                    //   leadingIcon: Icons.key_outlined,
+                    // ),
+
+                    // Logout
+                    SizedBox(height: mq.height * 0.03),
+                    Card(
+                      elevation: 4,
+                      child: GestureDetector(
+                          onTap: () async {
+                            SharedPreferences sp =
+                                await SharedPreferences.getInstance();
+                            await sp.remove('token');
+                          Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()));
+                          },
+                          child: Container(
+                              margin: EdgeInsets.all(14),
+                              height: mq.height * 0.07,
+                              width: mq.width,
+                              decoration: BoxDecoration(
+                                color: Palette.primarycolor,
+                                borderRadius: BorderRadius.circular(9),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.logout_rounded,
+                                      color: Colors.white),
+                                  SizedBox(width: 4),
+                                  Text("Logout",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17,
+                                      )),
+                                ],
+                              ))),
+                    )
+                  ],
+                ),
+              ));
   }
 
   Widget buildEditIcon(Color color) => buildCircle(

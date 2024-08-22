@@ -186,7 +186,8 @@ class _OrderPageForDriverState extends State<OrderPageForDriver> {
                                   ),
                                   child:const Icon(Icons.filter_list)
                                 ),
-                                )):const SizedBox.shrink()
+                                ))
+                                :const SizedBox.shrink()
                           ],
                         ),
                       )

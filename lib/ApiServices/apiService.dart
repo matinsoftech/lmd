@@ -47,10 +47,8 @@ class ApiServices {
               )
             });
 
-         await SharedPreferences.getInstance().then((value)=>{
-              value.setString('id', data['user']['id'].toString())
-
-         });  
+        await SharedPreferences.getInstance().then(
+            (value) => {value.setString('id', data['user']['id'].toString())});
 
         print(data['access_token']);
 
@@ -227,7 +225,7 @@ class ApiServices {
     };
     var response =
         await http.get(Uri.parse(ApiConstants.orderPickedUp), headers: header);
-        log(response.body);
+    log(response.body);
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       List pickedOrder = body['pickedupOrders'];
@@ -286,29 +284,32 @@ class ApiServices {
     return [];
   }
 
-
   //DriverProfile
-  static Future<DriverData> getDriverProfileData()async{
-
+  static Future<DriverData> getDriverProfileData() async {
     var sp = await SharedPreferences.getInstance();
     String? token = sp.getString('token');
     String? id = sp.getString('id');
+
     log(id.toString());
     var header = {
-      "Accept":"application/json",
-      "Authorization":"Bearer $token"
+      "Accept": "application/json",
+      "Authorization": "Bearer $token"
     };
 
-    var response = await http.get(Uri.parse(ApiConstants.baseUrl+'/api/drivers?id=$id'),headers:header);
+    var response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + '/api/drivers?id=$id'),
+        headers: header);
     print(response.body);
-    
-      if(response.statusCode==200){
-        var data = jsonDecode(response.body);
-        var profileinfo = data['driver_data'];
-        return DriverData.fromJson(profileinfo);
-      }else{
-        throw Exception('Failed to fetch driver profile');
-      }
 
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var profileinfo = data['driver_data'];
+      if (profileinfo == null) {
+        return DriverData();
+      }
+      return DriverData.fromJson(profileinfo);
+    } else {
+      throw Exception('Failed to fetch driver profile');
+    }
   }
 }
